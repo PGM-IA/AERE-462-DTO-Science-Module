@@ -1,0 +1,15 @@
+What we have:
+https://www.lowes.com/pd/Charlotte-Pipe-1-2-in-dia-x-10-ft-L-315-PSI-SDR-13-5-PVC-Pipe/1000080799
+
+Refs:
+Main Pipe
+https://www.mcmaster.com/48925K91/
+Size: 1/2
+
+45 elbow
+https://www.mcmaster.com/4880K31/
+Size: 1/2
+
+Tee Junction
+https://www.mcmaster.com/4880K41/
+Size: 1/2
