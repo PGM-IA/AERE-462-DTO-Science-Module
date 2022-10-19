@@ -2,7 +2,7 @@
 # AERE 462
 # DTO Code 
 
-# TODO Implement control binds and set associated gpio pin outputs to control thrust and pulses
+# TODO Implement control binds and set associated gpio pin outputs to control thrust and pulses / Investagate Pygame package as a replacement for pynput
 
 from pynput.keyboard import Key, Listener
 
