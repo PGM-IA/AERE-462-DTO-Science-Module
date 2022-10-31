@@ -1,9 +1,9 @@
 from gpiozero import DigitalOutputDevice
 from time import sleep
 
-# Blue cluster
+# Blue cluster verified and labeled
 
-S4 = DigitalOutputDevice(25) # Thruster #4
+S4 = DigitalOutputDevice(25) # Thruster #4 
 S4.on()
 sleep(0.5)
 S4.off()
@@ -45,7 +45,7 @@ S5.on()
 sleep(0.5)
 S5.off()
 
-# Yellow cluster
+# Yellow cluster Tested and verified                                                                                                                                                                                    cluster
 
 S12 = DigitalOutputDevice(4) # Thruster #12
 S12.on()
@@ -67,7 +67,7 @@ S9.on()
 sleep(0.5)
 S9.off()
 
-# Red cluster
+# Red cluster Tested and verified                                                                                                                                                                                    cluster
 
 S16 = DigitalOutputDevice(26) # Thruster #16
 S16.on()
