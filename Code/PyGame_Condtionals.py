@@ -10,8 +10,10 @@ pygame.init()
 # creating display
 display = pygame.display.set_mode((300, 300))
 
+abortMission = False
+
 # creating a running loop
-while True:
+while not abortMission:
 	
 	# creating a loop to check events that
 	# are occurring
@@ -38,3 +40,10 @@ while True:
 			# checking if key "M" was pressed
 			if event.key == pygame.K_m:
 				print("Key M has been pressed")
+
+			# checking if key "del" was pressed
+			if event.key == pygame.K_DELETE:
+				print("Ending Mission")
+				pygame.quit()
+				sys.exit()
+					
