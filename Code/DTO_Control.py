@@ -14,7 +14,7 @@ pygame.init()
 # Define Global Variables
 
 # Default Pulse Duration
-pulse_dir = 0.400
+pulse_dur = 0.400
 
 #   Define Keybinds:
 #       Motion Controls
@@ -22,7 +22,7 @@ translational = [pygame.K_h, pygame.K_n, pygame.K_l, pygame.K_j, pygame.K_i, pyg
 rotational = [pygame.K_e, pygame.K_q, pygame.K_s, pygame.K_w, pygame.K_a, pygame.K_d]
 
 #       Thrust Modulation
-pulse_modulate = [pygame.K_PLUS, pygame.K_MINUS, pygame.K_x]
+pulse_modulate = [pygame.K_LSHIFT, pygame.K_LCTRL, pygame.K_x, pygame.K_z]
 
 #       Termination of mission
 abort_mission = pygame.K_DELETE
@@ -81,7 +81,7 @@ def close_all_valves():
 
 #   Translational motion functions
 
-def translation(pulse_dir,key): # Movement in the x+ direction with a pulse of pulse_dir
+def translation(pulse_dur,key): # Translational Movement with a pulse of pulse_dur
 
     # X direction
 
@@ -91,7 +91,7 @@ def translation(pulse_dir,key): # Movement in the x+ direction with a pulse of p
         S7.on()
         S12.on()
         S15.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_n): # X-
@@ -100,7 +100,7 @@ def translation(pulse_dir,key): # Movement in the x+ direction with a pulse of p
         S5.on()
         S9.on()
         S13.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     # Y direction
@@ -109,14 +109,14 @@ def translation(pulse_dir,key): # Movement in the x+ direction with a pulse of p
 
         S6.on()
         S16.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_j): # Y-
 
         S8.on()
         S14.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     # Z direction
@@ -125,19 +125,19 @@ def translation(pulse_dir,key): # Movement in the x+ direction with a pulse of p
 
         S4.on()
         S10.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_k): # Z-
 
         S2.on()
         S12.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
     
 #   Rotational motion functions
 
-def Rotation(pulse_dir,key): # Movement in the x+ direction with a pulse of pulse_dir
+def rotation(pulse_dur,key): # Rotational movement with a pulse of pulse_dur
 
     # X direction
 
@@ -147,7 +147,7 @@ def Rotation(pulse_dir,key): # Movement in the x+ direction with a pulse of puls
         S8.on()
         S12.on()
         S16.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_q): # X- (CCW)
@@ -156,7 +156,7 @@ def Rotation(pulse_dir,key): # Movement in the x+ direction with a pulse of puls
         S6.on()
         S10.on()
         S14.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     # Y direction
@@ -165,14 +165,14 @@ def Rotation(pulse_dir,key): # Movement in the x+ direction with a pulse of puls
 
         S7.on()
         S13.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_w): # Y-
 
         S5.on()
         S15.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     # Z direction
@@ -181,15 +181,37 @@ def Rotation(pulse_dir,key): # Movement in the x+ direction with a pulse of puls
 
         S1.on()
         S11.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
 
     elif(key == pygame.K_d): # Z-
 
         S3.on()
         S9.on()
-        sleep(pulse_dir)
+        sleep(pulse_dur)
         close_all_valves()
+
+def modulate_thrust(pulse_dur,key): # Function to change thrust
+
+    if(key == pygame.K_LSHIFT):
+        
+        pulse_dur = pulse_dur + 0.100
+
+    elif(key == pygame.K_LCTRL):
+
+        pulse_dur = pulse_dur - 0.100
+
+    elif(key == pygame.K_x):
+        
+        close_all_valves()
+
+    elif(key == pygame.K_z):
+
+        pulse_dur = 0.400
+    
+    print("The Current Pulse Duration is:" + str(pulse_dur))
+
+    return pulse_dur
 
 # End defs and begin main body
 
@@ -199,6 +221,8 @@ close_all_valves()
 # Create "HUD"
 display = pygame.display.set_mode((300, 300))
 
+# Run control system
+
 while  not mission_end:
     
     for event in pygame.event.get():
@@ -206,9 +230,15 @@ while  not mission_end:
         if event.type == pygame.KEYDOWN:
 
             if event.key in translational:
-                translation(pulse_dir,event.key)
+                translation(pulse_dur,event.key)
+
+            elif event.key in rotational:
+                rotation(pulse_dur,event.key)
+
+            elif event.key in pulse_modulate:
+                pulse_dur = modulate_thrust(pulse_dur,event.key)
             
-            if event.key == pygame.K_DELETE:
+            elif event.key == pygame.K_DELETE:
                 pygame.quit()
                 sys.exit()  
 			
